@@ -1,0 +1,40 @@
+# APP_ROOT/docker-compose.yml
+version: '3.5'
+
+services:
+
+  pgadmin:
+    build: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: manager@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: manager
+    ports:
+      - "82:80"
+    networks:
+      - emrgmsg_ntwrk
+
+  user_service_db:
+    build:
+      context: /postgresql/user-service/
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: manager
+      POSTGRES_PASSWORD: manager
+    networks:
+      - emrgmsg_ntwrk
+
+  user-service:
+    build: user-service
+    depends_on:
+      - user_service_db
+    image: emrgmsg_user-service:1.0.0
+    restart: unless-stopped
+    ports:
+      - "90:8080"
+    networks:
+      - emrgmsg_ntwrk
+
+networks:
+  emrgmsg_ntwrk:
+    name: emrgmsg_ntwrk
