@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "User-service DB",
+      "Group": "Server Group",
+      "Port": 5432,
+      "Username": "manager",
+      "Password": "manager",
+      "Host": "user_service_db",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    }
+  }
+}
